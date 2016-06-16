@@ -7,7 +7,7 @@
             "type": "gpio",
             "args": {
                 "direction": "in"
-                }
+            }
         }
     },
     "args": {

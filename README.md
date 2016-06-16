@@ -42,8 +42,8 @@ the initial working state of sound sensor
 Here is the usage of this driver
 
 ```js
-    $('#<device-id>').enable();
-    $('#<device-id>').disable();
+    $('#<device-id>').enable(callback);
+    $('#<device-id>').disable(callback);
     $('#<device-id>').interval = value;
     $('#<device-id>').on('receive', function() {
         console.log('in sound receive');
@@ -57,25 +57,29 @@ It's better to change `interval` value when the device is disabled.
 
 ### Methods
 
-#### `enable()`
+#### `enable(callback)`
 
-enable the sound sensor
+Enable the sound sensor.
 
-#### `disable()`
+- **callback:** No arguments other than a possible exception are given to the completion callback.
 
-disable the sound sensor
+#### `disable(callback)`
+
+Disable the sound sensor.
+
+- **callback:** No arguments other than a possible exception are given to the completion callback.
 
 ### Properties
 
 #### `interval`
 
-the listen interval of sound sensor
+The listen interval of sound sensor.
 
 ### Events
 
 #### `receive`
 
-Emitted when receive a sound
+Emitted when receive a sound.
 
 ## Contributing
 

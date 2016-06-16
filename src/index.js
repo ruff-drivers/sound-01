@@ -6,7 +6,7 @@
 'use strict';
 
 var driver = require('ruff-driver');
-var Gpio = require('gpio');
+var Edge = require('gpio').Edge;
 
 var prototype = {
     _oninterrupt: function () {
@@ -16,13 +16,13 @@ var prototype = {
     _mountInterruptListener: function () {
         this._gpio.once('interrupt', this._oninterrupt.bind(this));
     },
-    enable: function () {
+    enable: function (callback) {
         this._mountInterruptListener();
-        this._gpio.setEdge(Gpio.EDGE_FALLING);
+        this._gpio.setEdge(Edge.falling, callback);
     },
-    disable: function () {
+    disable: function (callback) {
         clearTimeout(this._timer);
-        this._gpio.setEdge(Gpio.EDGE_NONE);
+        this._gpio.setEdge(Edge.none, callback);
     }
 };
 
@@ -38,15 +38,18 @@ Object.defineProperties(prototype, {
 });
 
 module.exports = driver({
-    attach: function (inputs) {
-        this._gpio = inputs.getRequired('gpio');
-        this._interval = inputs.getRequired('interval');
-        this._enabled = inputs.getRequired('enabled');
+    attach: function (inputs, context, next) {
+        this._gpio = inputs['gpio'];
+
+        var args = context.args;
+
+        this._interval = args.interval;
+        this._enabled = args.enabled;
 
         if (this._enabled === true) {
-            this.enable();
+            this.enable(next);
         } else {
-            this._gpio.setEdge(Gpio.EDGE_NONE);
+            this._gpio.setEdge(Edge.none, next);
         }
     },
     exports: prototype
