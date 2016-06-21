@@ -10,7 +10,7 @@ Sound Sensor driver with GPIO interface.
 
 ## Supported Models
 
-- [SOUND-01](https://rap.ruff.io/devices/SOUND-01)
+- [sound-01](https://rap.ruff.io/devices/sound-01)
 
 ## Installing
 
@@ -22,7 +22,7 @@ Sound Sensor driver with GPIO interface.
 rap device add <device-id>
 
 # Then enter a supported model, for example:
-# ? model: SOUND-01
+# ? model: sound-01
 # ? value (number) for argument "interval": (1000)
 # ? value (boolean) for argument "enabled": (Y/n)
 ```
@@ -31,55 +31,49 @@ rap device add <device-id>
 
 #### `interval`
 
-the listen interval of sound sensor
+Minimum interval between two `sound` events, defaults to `1000` milliseconds.
 
 #### `enabled`
 
-the initial working state of sound sensor
+Whether to enable this device once it gets loaded, defaults to `true`.
 
 ## Usage
 
-Here is the usage of this driver
+Here is the basic usage of this driver.
 
 ```js
-    $('#<device-id>').enable(callback);
-    $('#<device-id>').disable(callback);
-    $('#<device-id>').interval = value;
-    $('#<device-id>').on('receive', function() {
-        console.log('in sound receive');
-    });
+$('#<device-id>').on('sound', function() {
+    console.log('sound detected');
+});
 ```
-
-## FAQ
-It's better to change `interval` value when the device is disabled.
 
 ## API References
 
 ### Methods
 
-#### `enable(callback)`
+#### `enable([callback])`
 
 Enable the sound sensor.
 
-- **callback:** No arguments other than a possible exception are given to the completion callback.
+- **callback:** No argument other than a possible error is given to the completion callback.
 
-#### `disable(callback)`
+#### `disable([callback])`
 
 Disable the sound sensor.
 
-- **callback:** No arguments other than a possible exception are given to the completion callback.
+- **callback:** No argument other than a possible error is given to the completion callback.
 
 ### Properties
 
 #### `interval`
 
-The listen interval of sound sensor.
+Minimum interval between two `sound` events.
 
 ### Events
 
-#### `receive`
+#### `sound`
 
-Emitted when receive a sound.
+Emitted when sound detected.
 
 ## Contributing
 

@@ -6,7 +6,8 @@
         "gpio": {
             "type": "gpio",
             "args": {
-                "direction": "in"
+                "direction": "in",
+                "edge": "none"
             }
         }
     },

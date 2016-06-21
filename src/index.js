@@ -5,23 +5,24 @@
 
 'use strict';
 
-var driver = require('ruff-driver');
 var Edge = require('gpio').Edge;
+var driver = require('ruff-driver');
 
 var prototype = {
     _oninterrupt: function () {
-        this.emit('receive');
-        this._timer = setTimeout(this._mountInterruptListener.bind(this), this._interval);
-    },
-    _mountInterruptListener: function () {
-        this._gpio.once('interrupt', this._oninterrupt.bind(this));
+        var now = Date.now();
+
+        if (now - this._lastEmittingTimestamp < this._interval) {
+            return;
+        }
+
+        this._lastEmittingTimestamp = now;
+        this.emit('sound');
     },
     enable: function (callback) {
-        this._mountInterruptListener();
         this._gpio.setEdge(Edge.falling, callback);
     },
     disable: function (callback) {
-        clearTimeout(this._timer);
         this._gpio.setEdge(Edge.none, callback);
     }
 };
@@ -39,17 +40,17 @@ Object.defineProperties(prototype, {
 
 module.exports = driver({
     attach: function (inputs, context, next) {
+        this._lastEmittingTimestamp = 0;
+
         this._gpio = inputs['gpio'];
+        this._gpio.on('interrupt', this._oninterrupt.bind(this));
 
         var args = context.args;
 
         this._interval = args.interval;
-        this._enabled = args.enabled;
 
-        if (this._enabled === true) {
+        if (args.enabled) {
             this.enable(next);
-        } else {
-            this._gpio.setEdge(Edge.none, next);
         }
     },
     exports: prototype
