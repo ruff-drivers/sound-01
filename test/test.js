@@ -6,7 +6,6 @@ var assert = require('assert');
 var mock = require('ruff-mock');
 
 var any = mock.any;
-var mockAny = mock.mockAny;
 var when = mock.when;
 
 var Device = require('../');
