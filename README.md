@@ -12,6 +12,10 @@ Sound Sensor driver with GPIO interface.
 
 - [sound-01](https://rap.ruff.io/devices/sound-01)
 
+  Use the blue rotating adjuster on the sensor to adjust the sound detection threshold.
+
+  ![adjuster](http://oigzg22zh.bkt.clouddn.com/sensor.JPG)
+
 ## Installing
 
 1. Execute following command and enter a **supported model** to install.
