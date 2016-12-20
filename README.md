@@ -14,7 +14,7 @@ Sound Sensor driver with GPIO interface.
 
   Use the blue rotating adjuster on the sensor to adjust the sound detection threshold.
 
-  ![adjuster](http://oigzg22zh.bkt.clouddn.com/sensor.JPG)
+  ![adjuster](sensor.JPG)
 
 ## Installing
 
